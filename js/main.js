@@ -15,6 +15,9 @@
 // }
 
 
+//problems 
+//when pressing equals button it is adding the first variable (not second variable) so output + number1 not number2
+//
 
 
 // variables:
@@ -59,22 +62,25 @@ var number2;
 var clearScreen = false;
 var operatorClicked;
 var output;
+var clickedTwice = false;
 
 
 
 $(".clear").on("click",function() {
 		$("#screen").html("");
-		output == 0;
-		number1 == 0;
-		number2 == 0;
+		output = 0;
+		number1 = 0;
+		number2 = 0;
 });
 
 
 
+
 $(".digits").on("click",function() {
-	if (clearScreen == true) {
+	if (clearScreen == true & clickedTwice == false)  {
 		$("#screen").html("");
-		// clearScreen = false;
+		clearScreen = false;
+		$("#screen").append($(this).val());
 	} else {	
 	$("#screen").append($(this).val());
 	}
@@ -84,14 +90,15 @@ $(".digits").on("click",function() {
 $(".operator").on("click",function() {
 	number1 = $("#screen").html();
 	operatorClicked = $(this).val();
-	clearScreen == true;
-	$("#screen").html("");	
-	// clearScreen == false;
+	clearScreen = true;
+
 	
 
 });
 
 $("#equals").on("click", function() {
+
+var output2; 
 
 	number2 = $("#screen").html();
 	if (operatorClicked == "+") {
@@ -104,14 +111,18 @@ $("#equals").on("click", function() {
 		output = division(number1,number2);
 	} else {
 		output == 0;
-	}
-	//if the operator is clicked after the second variable is stored
-	console.log(clearScreen);
+ 	}
 
-	console.log(operatorClicked);
-	console.log(output);
 	$("#screen").html("");
 	$("#screen").html(output);
+
+	//if the operator is clicked after the second variable is stored
+	console.log(clearScreen);
+	console.log(number1);
+	console.log(number2);
+	console.log(operatorClicked);
+	console.log(output);
+
 
 });
 
@@ -128,7 +139,7 @@ $("#equals").on("click", function() {
 
 	
 	function addition (a,b) {
-	 return parseFloat(((a*1) + (b*1)));		
+	 return parseFloat(Number(a) + Number(b));		
 	}
 	function subtraction (a,b) {
 	 return parseFloat((a - b));		
