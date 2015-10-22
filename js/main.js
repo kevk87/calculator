@@ -57,33 +57,53 @@
 // 		output will equal number1 += number2
 
 
+
+
+
+
+
 var number1;
 var number2;
 var clearScreen = false;
 var operatorClicked;
 var output;
-var clickedTwice = false;
+var multipleClicks = false;
+var total = 0;
 
+
+function reset(){
+
+	console.log("reset called");
+
+	$("#screen").html("");
+
+	output = 0;
+	number1 = 0;
+	number2 = 0;
+	lastOperand = 0;
+	clearScreen = false;
+}
 
 
 $(".clear").on("click",function() {
-		$("#screen").html("");
-		output = 0;
-		number1 = 0;
-		number2 = 0;
+	reset();
 });
 
 
 
 
 $(".digits").on("click",function() {
-	if (clearScreen == true & clickedTwice == false)  {
+
+	if (clearScreen == true)  {
 		$("#screen").html("");
-		clearScreen = false;
+		
 		$("#screen").append($(this).val());
+		clearScreen = false;
 	} else {	
-	$("#screen").append($(this).val());
+		$("#screen").append($(this).val());
 	}
+
+
 });
 
 
@@ -91,37 +111,71 @@ $(".operator").on("click",function() {
 	number1 = $("#screen").html();
 	operatorClicked = $(this).val();
 	clearScreen = true;
-
-	
-
 });
+
+
+
 
 $("#equals").on("click", function() {
 
-var output2; 
+	console.log(clearScreen);
+	var constant;
+	var output2; 
+	var numberofNumbers = [];
+
 
 	number2 = $("#screen").html();
-	if (operatorClicked == "+") {
-		output = addition(number1,number2);
-	} else if (operatorClicked == "-") {
-		output = subtraction(number1,number2);
-	} else if (operatorClicked =="*") {
-		output = mutiplication(number1,number2);
-	} else if (operatorClicked =="/") {
-		output = division(number1,number2);
-	} else {
-		output == 0;
- 	}
+	
 
-	$("#screen").html("");
-	$("#screen").html(output);
+	lastOperand = numberofNumbers.length;
 
-	//if the operator is clicked after the second variable is stored
-	console.log(clearScreen);
-	console.log(number1);
-	console.log(number2);
-	console.log(operatorClicked);
-	console.log(output);
+
+
+	function compute() {
+	switch(operatorClicked){
+		case "+":
+			output = addition(number1,number2);
+			break;
+		case "-": 
+			output = subtraction(number1,number2);
+			break;
+		case "*":
+			output = multiplication(number1,number2);
+			break;
+		case "/" :
+			output = division(number1,number2);
+			break;
+		default:
+			console.log("invalid operator: " + operatorClicked);
+			break;			
+	}
+
+ }
+
+
+
+	// function test2() {
+	// 		constant = output - number1;
+	// 		addition(constant, output);
+	// }
+
+
+	 // if (clearScreen == false) {
+		compute();
+		$("#screen").html("");
+		$("#screen").html(output);
+	
+	// } else {
+	// 	test2();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output2);
+	//  }
+ 
+ 	
+ 	// $("#screen").html("");
+ 	// $("#screen").html(output);
+
+
 
 
 });
@@ -136,26 +190,45 @@ var output2;
 // 	$("#screen").html();
 // }
 
+	// function output2 (a,b,c,d) {
+	// 	for (i=0; i<d; i+=1) {
+	// 		c=a+b;
+	// 		a=b;
+	// 		b=c;
 
+	// 	} return c;
+	// }
 	
 	function addition (a,b) {
-	 return parseFloat(Number(a) + Number(b));		
+	 return (Number(a) + Number(b));		
 	}
 	function subtraction (a,b) {
-	 return parseFloat((a - b));		
+	 return ((a - b));		
 	}
 
-	function mutiplication (a,b) {
- 	 return parseFloat((a * b));		
+	function multiplication (a,b) {
+ 	 return ((a * b));		
 	}
 	function division (a,b) {
-	 return parseFloat((a/b));		
+	 return ((a/b));		
 	}
 	function getLength (numbers) {
 	 return numbers.toString().length;
 	}
 
 
+
+// if (operatorClicked == "+") {
+// 	output = addition(number1,number2);		
+// } else if (operatorClicked == "-") {
+// 	output = subtraction(number1,number2);
+// } else if (operatorClicked =="*") {
+// 	output = multiplication(number1,number2);
+// } else if (operatorClicked =="/") {
+// 	output = division(number1,number2);
+// } else {
+// 	console.log("test");
+// 	}
 
 //use two functions to get two values
 
