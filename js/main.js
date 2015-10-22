@@ -69,6 +69,8 @@ var operatorClicked;
 var output;
 var multipleClicks = false;
 var total = 0;
+var negative = false;
+var totalLengthScreen = false;
 
 
 function reset(){
@@ -82,6 +84,7 @@ function reset(){
 	number2 = 0;
 	lastOperand = 0;
 	clearScreen = false;
+	multipleClicks = 0;
 }
 
 
@@ -91,19 +94,39 @@ $(".clear").on("click",function() {
 
 
 
+$(".negative").on("click",function() {
+	if (negative == false) {
+		$("#screen").prepend($(this).val());
+		negative = true;
+	}	else {
+		($("#screen").slice(0));
+		console.log($("#screen"));
+		negative = false;
+	}
+})
+
+
+$(".decimal").on("click",function() {
+	if (multipleClicks == false) {
+		$("#screen").append($(this).val());
+		multipleClicks = true;
+	} else {
+		console.log("cannot add anymore decimal points");
+	}
+});
+
 
 $(".digits").on("click",function() {
 
 	if (clearScreen == true)  {
-		$("#screen").html("");
-		
+		$("#screen").html("");	
 		$("#screen").append($(this).val());
+		multipleClicks = false;
 		clearScreen = false;
+			
 	} else {	
 		$("#screen").append($(this).val());
 	}
-
-
 });
 
 
@@ -123,11 +146,17 @@ $("#equals").on("click", function() {
 	var output2; 
 	var numberofNumbers = [];
 
+	numberofNumbers.push(number1);
+	numberofNumbers.push(number2);
+
+
+
 
 	number2 = $("#screen").html();
-	
+
 
 	lastOperand = numberofNumbers.length;
+	console.log(numberofNumbers);
 
 
 
@@ -151,6 +180,8 @@ $("#equals").on("click", function() {
 	}
 
  }
+
+
 
 
 
@@ -190,14 +221,14 @@ $("#equals").on("click", function() {
 // 	$("#screen").html();
 // }
 
-	// function output2 (a,b,c,d) {
-	// 	for (i=0; i<d; i+=1) {
-	// 		c=a+b;
-	// 		a=b;
-	// 		b=c;
+	function output2 (a,b,c,d) {
+		for (i=0; i<d; i+=1) {
+			c=a+b;
+			a=b;
+			b=c;
 
-	// 	} return c;
-	// }
+		} return c;
+	}
 	
 	function addition (a,b) {
 	 return (Number(a) + Number(b));		
