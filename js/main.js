@@ -63,11 +63,16 @@ var number2;
 var clearScreen = false;
 var operatorClicked;
 var output;
+//for decimals
 var multipleClicks = false;
 var total = 0;
+//check for negative/positive toggle
 var negative = false;
+//check if number is too long
 var totalLengthScreen = false;
+//check if the zero is pressed on the first value
 var zeroPressed = false;
+//counter variable to check if input is longer than 12 numbers/characters
 var numberOfClicks = 0;
 
 function reset(){
@@ -85,27 +90,28 @@ function reset(){
 	numberOfClicks = 0;
 }
 
+function numberClicks() {
+	numberOfClicks +=1;	
+}
+
 
 $(".clear").on("click",function() {
 	reset();
-});
+	});
+
 
 
 
 $(".negative").on("click",function() {
-
-	// var screenValue = Number($("#screen").html());
-	if (negative == false) {
-		$("#screen").prepend($(this).val());
-		// (-Math.abs(screenValue));
+	var screenValue = Number($("#screen").html());
+	if (negative == false) {	
+		$("#screen").html((-Math.abs(screenValue)));
 		negative = true;
 	} else {
-		// (Math.abs(screenValue));
-		$("#screen").html().slice(0,1);
-		console.log($("#screen").html());
+		$("#screen").html((Math.abs(screenValue)));
 		negative = false;
 		}
-})
+	});
 
 
 $(".decimal").on("click",function() {
@@ -115,16 +121,24 @@ $(".decimal").on("click",function() {
 		} else {
 			console.log("cannot add anymore decimal points");
 		}
-});
+	});
+
+$("#zero").on("click",function() {
+		if ($("#screen").html().length == 0) {
+			zeroPressed = true;
+			console.log ("cannot press zero on the first digit");
+		} else {
+			if( clearScreen == false) {
+			$("#screen").append($(this).val());
+			}	else {
+				console.log("do nothing");
+			}	
+		}
+	});
 	
 
 $(".digits").on("click",function() {
 	
-
-	function numberClicks() {
-		numberOfClicks +=1;	
-	}
-
 	numberClicks();
 
 	if (clearScreen == true)  {
@@ -137,13 +151,27 @@ $(".digits").on("click",function() {
 
 		if (numberOfClicks <= 12)  {
 			$("#screen").append($(this).val());
-			totalLengthScreen == false;
-			
-		} else {
-		totalLengthScreen == true;
+			totalLengthScreen = false;
+		} 
+		// else if (numberOfClicks == 1 && $(this).val("0")) {
+		//		zeroPressed = true;
+		//		console.log ("cannot press zero on the first digit");
+		// } 
+		else {
+		// zeroPressed = false;
+		totalLengthScreen = true;
 		console.log("cannot add more");
 		}
+		// 	if (numberOfClicks == 1 && $(this).val()=="0" && zeroPressed == false) {
+		// 	zeroPressed = true;
+		// 	console.log ("cannot press zero on the first digit");
+		// 	} else {
+		// 	zeroPressed = false;
+		// 	console.log(zeroPressed);
+		// }
 	}
+		
+
 });
 
 
@@ -159,14 +187,22 @@ $(".operator").on("click",function() {
 
 
 $("#equals").on("click", function() {
+	// console.log($("#screen").html().length);
+	// if ($("#screen").html().length >= 12) {
+	// 	console.log("answer too long");
+	// 	$("#screen").html("error");
+	// } else {
+	// 	$("#screen").html();
+	// }
 
 	console.log(clearScreen);
 	var constant;
 	var output2; 
-	var numberofNumbers = [];
 
-	numberofNumbers.push(number1);
-	numberofNumbers.push(number2);
+	// var numberofNumbers = [];
+
+	// numberofNumbers.push(number1);
+	// numberofNumbers.push(number2);
 
 
 
@@ -174,8 +210,8 @@ $("#equals").on("click", function() {
 	number2 = $("#screen").html();
 
 
-	lastOperand = numberofNumbers.length;
-	console.log(numberofNumbers);
+	// lastOperand = numberofNumbers.length;
+	// console.log(numberofNumbers);
 
 
 
@@ -203,6 +239,7 @@ $("#equals").on("click", function() {
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
+		clearScreen = true;
 	
 });
 
