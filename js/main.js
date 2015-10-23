@@ -71,7 +71,7 @@ var negative = false;
 //check if number is too long
 var totalLengthScreen = false;
 //check if the zero is pressed on the first value
-var zeroPressed = false;
+// var zeroPressed = false;
 //counter variable to check if input is longer than 12 numbers/characters
 var numberOfClicks = 0;
 
@@ -124,10 +124,7 @@ $(".decimal").on("click",function() {
 	});
 
 $("#zero").on("click",function() {
-		if ($("#screen").html().length == 0) {
-			zeroPressed = true;
-			console.log ("cannot press zero on the first digit");
-		} else {
+		if ($("#screen").html().length > 0) {
 			if( clearScreen == false) {
 			$("#screen").append($(this).val());
 			}	else {
@@ -179,6 +176,9 @@ $(".operator").on("click",function() {
 	numberOfClicks = 0;
 	number1 = $("#screen").html();
 	operatorClicked = $(this).val();
+	// if (number1 === null ) {
+		
+	// }
 	clearScreen = true;
 	totalLengthScreen = false;
 });
