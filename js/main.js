@@ -74,6 +74,11 @@ var totalLengthScreen = false;
 // var zeroPressed = false;
 //counter variable to check if input is longer than 12 numbers/characters
 var numberOfClicks = 0;
+var firstEquation = true;
+
+
+
+
 
 function reset(){
 
@@ -81,18 +86,41 @@ function reset(){
 
 	$("#screen").html("");
 
-	output = 0;
-	number1 = 0;
-	number2 = 0;
+	output = null;
+	number1 = null;
+	number2 = null;
 	lastOperand = 0;
 	clearScreen = false;
 	multipleClicks = 0;
 	numberOfClicks = 0;
+	firstEquation = true;
 }
 
 function numberClicks() {
 	numberOfClicks +=1;	
 }
+
+function compute() {
+	switch(operatorClicked){
+		case "+":
+			output = addition(number1,number2);
+			break;
+		case "-": 
+			output = subtraction(number1,number2);
+			break;
+		case "*":
+			output = multiplication(number1,number2);
+			break;
+		case "/" :
+			output = division(number1,number2);
+			break;
+		default:
+			console.log("invalid operator: " + operatorClicked);
+			break;			
+	}
+}
+
+
 
 
 $(".clear").on("click",function() {
@@ -119,6 +147,7 @@ $(".decimal").on("click",function() {
 			$("#screen").append($(this).val());
 			multipleClicks = true;
 		} else {
+			clearScreen = true;
 			console.log("cannot add anymore decimal points");
 		}
 	});
@@ -150,22 +179,11 @@ $(".digits").on("click",function() {
 			$("#screen").append($(this).val());
 			totalLengthScreen = false;
 		} 
-		// else if (numberOfClicks == 1 && $(this).val("0")) {
-		//		zeroPressed = true;
-		//		console.log ("cannot press zero on the first digit");
-		// } 
 		else {
-		// zeroPressed = false;
 		totalLengthScreen = true;
 		console.log("cannot add more");
 		}
-		// 	if (numberOfClicks == 1 && $(this).val()=="0" && zeroPressed == false) {
-		// 	zeroPressed = true;
-		// 	console.log ("cannot press zero on the first digit");
-		// 	} else {
-		// 	zeroPressed = false;
-		// 	console.log(zeroPressed);
-		// }
+
 	}
 		
 
@@ -173,17 +191,61 @@ $(".digits").on("click",function() {
 
 
 $(".operator").on("click",function() {
+	
+
 	numberOfClicks = 0;
-	number1 = $("#screen").html();
-	operatorClicked = $(this).val();
-	// if (number1 === null ) {
+	// number1 = $("#screen").html();
+
+
+	if (number1 == null && firstEquation == true) {
+		number1 = $("#screen").html();
+		firstEquation = false;
+		// clearScreen = true;
+	}	else {
+		number2 = $("#screen").html();
+		compute();
+		number1 = output;
+		$("#screen").html(output);
 		
+	}
+
+
+
+
+
+	// number1 = $("#screen").html();
+
+
+	// if (number1 == null && clearScreen == false) {
+	//	number1 = $("#screen").html();
+	//	console.log("added first variable"); 
+	//	clearScreen = true;
+	//		if (number2 == null) {	
+	//			clearScreen = false;		
+	//			number2 = Number($("#screen").html());
+	//			console.log("added second variable"); 
+	//			compute();
+	//			console.log(number2);
+	//			$("#screen").html(output);
+			
+	//	} else {
+	//		console.log("wait until equal button is pressed");
+	//	}
+	//} else {
+	//	number2 = $("#screen").html();
+	//	number1 = output;
+	//	compute();
+	//	$("#screen").html(output);
 	// }
+
+
+	console.log(number1,number2);
+	operatorClicked = $(this).val();
 	clearScreen = true;
 	totalLengthScreen = false;
 });
 
-
+	
 
 
 $("#equals").on("click", function() {
@@ -195,54 +257,67 @@ $("#equals").on("click", function() {
 	// 	$("#screen").html();
 	// }
 
-	console.log(clearScreen);
-	var constant;
-	var output2; 
+	// number2 = $("#screen").html();
 
-	// var numberofNumbers = [];
-
-	// numberofNumbers.push(number1);
-	// numberofNumbers.push(number2);
-
-
-
-
-	number2 = $("#screen").html();
-
-
-	// lastOperand = numberofNumbers.length;
-	// console.log(numberofNumbers);
-
+//test
+	// if (firstEquation == true) {
+	// 	number2 = $("#screen").html();
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// 	clearScreen = true;
+	// 	firstEquation = false;
+	// } else { 
+	// 	number1 = output;
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// }
 
 
-	function compute() {
-	switch(operatorClicked){
-		case "+":
-			output = addition(number1,number2);
-			break;
-		case "-": 
-			output = subtraction(number1,number2);
-			break;
-		case "*":
-			output = multiplication(number1,number2);
-			break;
-		case "/" :
-			output = division(number1,number2);
-			break;
-		default:
-			console.log("invalid operator: " + operatorClicked);
-			break;			
-	}
-
- }
-
+	
+	if (number2 != null) {
+		number1 = output;
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
 		clearScreen = true;
+	} else {
+		number2 = $("#screen").html();
+		console.log(number2);
+		compute();
+		$("#screen").html("");
+		$("#screen").html(output);
+		clearScreen = true;
+	}
+
+
+
+ //	if (number2 == null) {
+	//	number2 = $("#screen").html();
+	//	compute();
+	//	$("#screen").html("");
+	//	$("#screen").html(output); 
+	//} else {
+	//	number1 = output;
+	//	compute()
+	//	$("#screen").html("");
+	//	$("#screen").html(output);
+
+		
+	// }
+
+
+
+		// compute();
+		// $("#screen").html("");
+		// $("#screen").html(output);
+		// clearScreen = true;
 	
 });
 
+
+	console.log(number2);
 
 	function output2 (a,b,c,d) {
 		for (i=0; i<d; i+=1) {
