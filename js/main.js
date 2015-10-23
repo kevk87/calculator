@@ -58,10 +58,6 @@
 
 
 
-
-
-
-
 var number1;
 var number2;
 var clearScreen = false;
@@ -71,7 +67,8 @@ var multipleClicks = false;
 var total = 0;
 var negative = false;
 var totalLengthScreen = false;
-
+var zeroPressed = false;
+var numberOfClicks = 0;
 
 function reset(){
 
@@ -85,6 +82,7 @@ function reset(){
 	lastOperand = 0;
 	clearScreen = false;
 	multipleClicks = 0;
+	numberOfClicks = 0;
 }
 
 
@@ -95,45 +93,66 @@ $(".clear").on("click",function() {
 
 
 $(".negative").on("click",function() {
+
+	// var screenValue = Number($("#screen").html());
 	if (negative == false) {
 		$("#screen").prepend($(this).val());
+		// (-Math.abs(screenValue));
 		negative = true;
-	}	else {
-		($("#screen").slice(0));
-		console.log($("#screen"));
+	} else {
+		// (Math.abs(screenValue));
+		$("#screen").html().slice(0,1);
+		console.log($("#screen").html());
 		negative = false;
-	}
+		}
 })
 
 
 $(".decimal").on("click",function() {
-	if (multipleClicks == false) {
-		$("#screen").append($(this).val());
-		multipleClicks = true;
-	} else {
-		console.log("cannot add anymore decimal points");
-	}
+		if (multipleClicks == false) {
+			$("#screen").append($(this).val());
+			multipleClicks = true;
+		} else {
+			console.log("cannot add anymore decimal points");
+		}
 });
-
+	
 
 $(".digits").on("click",function() {
+	
+
+	function numberClicks() {
+		numberOfClicks +=1;	
+	}
+
+	numberClicks();
 
 	if (clearScreen == true)  {
 		$("#screen").html("");	
 		$("#screen").append($(this).val());
 		multipleClicks = false;
 		clearScreen = false;
+
+	} else {
+
+		if (numberOfClicks <= 12)  {
+			$("#screen").append($(this).val());
+			totalLengthScreen == false;
 			
-	} else {	
-		$("#screen").append($(this).val());
+		} else {
+		totalLengthScreen == true;
+		console.log("cannot add more");
+		}
 	}
 });
 
 
 $(".operator").on("click",function() {
+	numberOfClicks = 0;
 	number1 = $("#screen").html();
 	operatorClicked = $(this).val();
 	clearScreen = true;
+	totalLengthScreen = false;
 });
 
 
@@ -181,45 +200,12 @@ $("#equals").on("click", function() {
 
  }
 
-
-
-
-
-	// function test2() {
-	// 		constant = output - number1;
-	// 		addition(constant, output);
-	// }
-
-
-	 // if (clearScreen == false) {
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
 	
-	// } else {
-	// 	test2();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output2);
-	//  }
- 
- 	
- 	// $("#screen").html("");
- 	// $("#screen").html(output);
-
-
-
-
 });
 
-// if (getLength(number1) >= 13) {
-// 	console.log("throw error");
-// } else if (getLength(number2) >=13) {
-// 	console.log("throw 2nd error");
-// } else if (getLength(output) >= 13) {
-// 	console.log("throw 3rd error");
-// } else {
-// 	$("#screen").html();
-// }
 
 	function output2 (a,b,c,d) {
 		for (i=0; i<d; i+=1) {
