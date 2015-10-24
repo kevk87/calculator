@@ -75,7 +75,7 @@ var totalLengthScreen = false;
 //counter variable to check if input is longer than 12 numbers/characters
 var numberOfClicks = 0;
 var firstEquation = true;
-
+var memoryButton;
 
 
 
@@ -123,11 +123,35 @@ function compute() {
 
 
 
+
 $(".clear").on("click",function() {
 	reset();
 	});
 
 
+$(".memory").on("click",function() {
+	switch ($(this).val()) {
+	case "MR":
+		memoryButton = ($("#screen").html());
+		clearScreen = true;
+		break;
+	case "MC":
+		memoryButton = null;
+		break;
+	case "M+":
+		output = addition(output,memoryButton);
+		$("#screen").html(output);
+		break;
+	case "M-":
+		output = subtraction(output,memoryButton);
+			$("#screen").html(output);
+			break;
+		default: 
+			console.log("invalid");
+			break;
+	}
+	console.log(memoryButton);
+});
 
 
 $(".negative").on("click",function() {
@@ -183,31 +207,57 @@ $(".digits").on("click",function() {
 		totalLengthScreen = true;
 		console.log("cannot add more");
 		}
-
 	}
-		
-
 });
 
 
 $(".operator").on("click",function() {
-	
 
 	numberOfClicks = 0;
-	// number1 = $("#screen").html();
+	number1 = $("#screen").html();
+	
+	// var test = true;
+	// numberOfClicks = 0;
+	// // number1 = $("#screen").html();
+
+	// 	if (number1 == null && firstEquation == true && test == true) {
+	// 	number1 = $("#screen").html();
+	// 	clearScreen = true;
+	// 	test = false;
+	// 		if (number2 == null && firstEquation == true && test == false) {
+	// 			number2 = Number($("#screen").html());
+	// 			console.log(number1);
+	// 			clearScreen = true;
+	// 			firstEquation = false;
+	// 		} else {
+	// 			console.log("need second value");
+	// 		}
+	// }	else {
+	// 	// number2 = $("#screen").html();
+	// 	Number(number2) = Number(number1);
+	// 	Number(number1) = Number(output);
+	// }
+
+	// operatorClicked = $(this).val();
+	// compute(number1, number2);
+	// $("#screen").html(output);	
 
 
-	if (number1 == null && firstEquation == true) {
-		number1 = $("#screen").html();
-		firstEquation = false;
-		// clearScreen = true;
-	}	else {
-		number2 = $("#screen").html();
-		compute();
-		number1 = output;
-		$("#screen").html(output);
-		
-	}
+
+
+
+	// if (number1 == null && firstEquation == true) {
+	// 	number1 = $("#screen").html();
+	// 	firstEquation = false;
+	// 	clearScreen = true;
+
+	// }	else {
+	// 	// number2 = $("#screen").html();
+	// 	number2 = number1;
+	// 	number1 = output;	
+	// }
+
+
 
 
 
@@ -239,7 +289,7 @@ $(".operator").on("click",function() {
 	// }
 
 
-	console.log(number1,number2);
+
 	operatorClicked = $(this).val();
 	clearScreen = true;
 	totalLengthScreen = false;
@@ -276,23 +326,26 @@ $("#equals").on("click", function() {
 
 
 	
+	
+		// if the user types in new number or press equals again
+		// clearScreen = true;
 	if (number2 != null) {
 		number1 = output;
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
 		clearScreen = true;
+		console.log("This is the first " + number1,number2,output);
 	} else {
 		number2 = $("#screen").html();
-		console.log(number2);
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
 		clearScreen = true;
+		console.log("This is the second " + number1,number2,output);
 	}
 
-
-
+	
  //	if (number2 == null) {
 	//	number2 = $("#screen").html();
 	//	compute();
