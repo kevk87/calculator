@@ -65,7 +65,6 @@ var operatorClicked;
 var output;
 //for decimals
 var multipleClicks = false;
-var total = 0;
 //check for negative/positive toggle
 var negative = false;
 //check if number is too long
@@ -132,20 +131,21 @@ $(".clear").on("click",function() {
 $(".memory").on("click",function() {
 	switch ($(this).val()) {
 	case "MR":
-		memoryButton = ($("#screen").html());
-		clearScreen = true;
+		($("#screen").html(memoryButton));
 		break;
 	case "MC":
 		memoryButton = null;
 		break;
 	case "M+":
+		memoryButton = $("#screen").html(); 
 		output = addition(output,memoryButton);
 		$("#screen").html(output);
 		break;
 	case "M-":
+		memoryButton = $("#screen").html(); 
 		output = subtraction(output,memoryButton);
 			$("#screen").html(output);
-			break;
+		break;
 		default: 
 			console.log("invalid");
 			break;
@@ -171,7 +171,7 @@ $(".decimal").on("click",function() {
 			$("#screen").append($(this).val());
 			multipleClicks = true;
 		} else {
-			clearScreen = true;
+			// clearScreen = true;
 			console.log("cannot add anymore decimal points");
 		}
 	});
@@ -187,7 +187,7 @@ $("#zero").on("click",function() {
 	});
 	
 
-$(".digits").on("click",function() {
+$(".digits").on("click",function(e) {
 	
 	numberClicks();
 
@@ -214,6 +214,7 @@ $(".digits").on("click",function() {
 $(".operator").on("click",function() {
 
 	numberOfClicks = 0;
+	multipleClicks = true;
 	number1 = $("#screen").html();
 	
 	// var test = true;
@@ -289,7 +290,7 @@ $(".operator").on("click",function() {
 	// }
 
 
-
+	number2 = null;
 	operatorClicked = $(this).val();
 	clearScreen = true;
 	totalLengthScreen = false;
@@ -324,7 +325,7 @@ $("#equals").on("click", function() {
 	// 	$("#screen").html(output);
 	// }
 
-
+	multipleClicks = false;
 	
 	
 		// if the user types in new number or press equals again
@@ -344,6 +345,7 @@ $("#equals").on("click", function() {
 		clearScreen = true;
 		console.log("This is the second " + number1,number2,output);
 	}
+
 
 	
  //	if (number2 == null) {
