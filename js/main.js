@@ -119,6 +119,18 @@ function compute() {
 	}
 }
 
+function numbersStored() {
+	if (number1 !== null && number2 == null) {
+		number2 = $("#screen").html();
+		numberStored = true;
+	} else if (number1 !== null && number2 !== null) {
+		numberStored = true;
+	} else	{
+		numberStored = false;
+	}
+	return numberStored;
+}
+
 
 
 
