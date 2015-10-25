@@ -139,24 +139,39 @@ $(".clear").on("click",function() {
 	reset();
 	});
 
+// Memory memoryButton
+// when memory plus button is clicked
+// if  memoryButton is not stored 
+// 		store the variable
+// 		else
+// 		add the value on the screen to the stored variable
+
+
 
 $(".memory").on("click",function() {
 	switch ($(this).val()) {
 	case "MR":
 		($("#screen").html(memoryButton));
+		clearScreen = true;
 		break;
 	case "MC":
 		memoryButton = null;
 		break;
 	case "M+":
-		memoryButton = $("#screen").html(); 
-		output = addition(output,memoryButton);
-		$("#screen").html(output);
+		if (memoryButton == null) {
+			memoryButton = Number($("#screen").html());
+			clearScreen = true;
+		} else {	
+		memoryButton +=(Number($("#screen").html())); 	
+		}
 		break;
 	case "M-":
-		memoryButton = $("#screen").html(); 
-		output = subtraction(output,memoryButton);
-			$("#screen").html(output);
+		if (memoryButton == null) {
+			memoryButton = Number($("#screen").html());
+			clearScreen = true;
+		} else {	
+		memoryButton -=(Number($("#screen").html())); 	
+		}
 		break;
 		default: 
 			console.log("invalid");
