@@ -139,6 +139,8 @@ $(".clear").on("click",function() {
 	reset();
 	});
 
+
+
 // Memory memoryButton
 // when memory plus button is clicked
 // if  memoryButton is not stored 
@@ -212,7 +214,21 @@ $("#zero").on("click",function() {
 			}	
 		}
 	});
+
 	
+$("body").keydown(function(e) {
+	if (e.keyCode >= 48 && e.keyCode <=57) {
+		if ($("#screen").html().length <= 12) {
+		$("#screen").append(String.fromCharCode(e.keyCode));
+	} else {
+		console.log("too long")
+	}
+		console.log(e.keyCode);
+	} else {
+		console.log("invalid");
+	}
+});
+
 
 $(".digits").on("click",function(e) {
 	
@@ -401,14 +417,6 @@ $("#equals").on("click", function() {
 
 	console.log(number2);
 
-	function output2 (a,b,c,d) {
-		for (i=0; i<d; i+=1) {
-			c=a+b;
-			a=b;
-			b=c;
-
-		} return c;
-	}
 	
 	function addition (a,b) {
 	 return (Number(a) + Number(b));		
