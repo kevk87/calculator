@@ -72,7 +72,7 @@ var totalLengthScreen = false;
 //check if the zero is pressed on the first value
 // var zeroPressed = false;
 //counter variable to check if input is longer than 12 numbers/characters
-var numberOfClicks = 0;
+
 var firstEquation = true;
 var memoryButton;
 
@@ -91,27 +91,24 @@ function reset(){
 	lastOperand = 0;
 	clearScreen = false;
 	multipleClicks = 0;
-	numberOfClicks = 0;
 	firstEquation = true;
 }
 
-function numberClicks() {
-	numberOfClicks +=1;	
-}
+
 
 function compute() {
 	switch(operatorClicked){
 		case "+":
-			output = addition(number1,number2);
+			output = addition(Number(number1),Number(number2));
 			break;
 		case "-": 
-			output = subtraction(number1,number2);
+			output = Number(subtraction(number1,number2));
 			break;
 		case "*":
-			output = multiplication(number1,number2);
+			output = Number(multiplication(number1,number2));
 			break;
 		case "/" :
-			output = division(number1,number2);
+			output = Number(division(number1,number2));
 			break;
 		default:
 			console.log("invalid operator: " + operatorClicked);
@@ -130,9 +127,6 @@ function numbersStored() {
 	}
 	return numberStored;
 }
-
-
-
 
 
 $(".clear").on("click",function() {
@@ -183,6 +177,11 @@ $(".memory").on("click",function() {
 });
 
 
+
+
+
+
+
 $(".negative").on("click",function() {
 	var screenValue = Number($("#screen").html());
 	if (negative == false) {	
@@ -215,50 +214,72 @@ $("#zero").on("click",function() {
 		}
 	});
 
+
+
+
+$(".digits").on("click",function(e) {
 	
-$("body").keydown(function(e) {
-	if (e.keyCode >= 48 && e.keyCode <=57) {
-		if ($("#screen").html().length <= 12) {
-		$("#screen").append(String.fromCharCode(e.keyCode));
+	numberClicks();
+	if (clearScreen == true)  {
+		$("#screen").html("");	
+		$("#screen").append($(this).val());
+		clearScreen = false;
 	} else {
-		console.log("too long")
+		if ($("#screen").html().length <= 12) {		
+			$("#screen").append($(this).val());
+		} else {
+		multipleClicks = false;
+		console.log("cannot add more");
+		}
+	}
+});
+
+$("body").keydown(function(e) {
+	if (e.keyCode >= 48 && e.keyCode <=57 || e.keyCode == 110 && clearScreen == true) {
+		if ($("#screen").html().length <= 12) {
+		// $("#screen").html("")
+		$("#screen").append(Number(String.fromCharCode(e.keyCode)));
+		clearScreen = false;
+	} else {
+		console.log("too long");
 	}
 		console.log(e.keyCode);
+	} else if (e.keyCode == 13) {
+		compute();
+		$("#screen").html(output);
+	} else if (e.keyCode >= 106 && e.keyCode <= 111) {
+		operatorClicked = $(this).String.fromCharCode(e.keyCode);
 	} else {
 		console.log("invalid");
 	}
 });
 
 
-$(".digits").on("click",function(e) {
-	
-	numberClicks();
-
-	if (clearScreen == true)  {
-		$("#screen").html("");	
-		$("#screen").append($(this).val());
-		multipleClicks = false;
-		clearScreen = false;
-
-	} else {
-
-		if (numberOfClicks <= 12)  {
-			$("#screen").append($(this).val());
-			totalLengthScreen = false;
-		} 
-		else {
-		totalLengthScreen = true;
-		console.log("cannot add more");
-		}
-	}
-});
+// if number1 is not null and number2 is null {
+// 	store the operatorClicked value 
+// 	store number2
+// 	compute 
+// 	display output
+// }	else if number1 and number2 are not null stored {
+// 	store the operatorClicked value
+// 	clearScreen = true
+// 	number2 will equal the new user inputted value
+// 	number1 will equal output
+// }	else if number1 is null {
+// 	store number1 as variable
+// 	store the operatorClicked value
+// 	clearScreen = true
+// }
 
 
 $(".operator").on("click",function() {
 
-	numberOfClicks = 0;
-	multipleClicks = true;
 	number1 = $("#screen").html();
+	number2 = null;
+	operatorClicked = $(this).val();
+	clearScreen = true;
+	
+	totalLengthScreen = false;
 	
 	// var test = true;
 	// numberOfClicks = 0;
@@ -333,10 +354,7 @@ $(".operator").on("click",function() {
 	// }
 
 
-	number2 = null;
-	operatorClicked = $(this).val();
-	clearScreen = true;
-	totalLengthScreen = false;
+
 });
 
 	
