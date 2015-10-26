@@ -210,6 +210,7 @@ $(".digits").on("click",function(e) {
 		$("#screen").append($(this).val());
 		clearScreen = false;
 		outputDisplayed = false;
+		switchEqualsFunction = true;
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
@@ -403,14 +404,25 @@ $("#equals").on("click", function() {
 		// if the user types in new number or press equals again
 		// clearScreen = true;
 	if (number2 != null) {
-		number1 = output;
-		compute();
-		$("#screen").html("");
-		$("#screen").html(output);
-		outputDisplayed = true;
-		clearScreen = true;
-		console.log("This is the first " + number1,number2,output);
-	
+		if (switchEqualsFunction == false) { 
+			number1 = output;
+			compute();
+			$("#screen").html("");
+			$("#screen").html(output);
+			outputDisplayed = true;
+			clearScreen = true;
+			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
+		} else {
+			number1 = output;
+			number2 = $("#screen").html();
+			compute();
+			$("#screen").html("");
+			$("#screen").html(output);
+			outputDisplayed = true;
+			clearScreen = true;
+			switchEqualsFunction = false;
+			console.log("This is the second " + number1,number2,output,switchEqualsFunction);
+		}
 	} else {
 		number2 = $("#screen").html();
 		compute();
@@ -418,7 +430,8 @@ $("#equals").on("click", function() {
 		$("#screen").html(output);
 		outputDisplayed = true;
 		clearScreen = true;
-		console.log("This is the second " + number1,number2,output);
+		switchEqualsFunction = false;
+		console.log("This is the third " + number1,number2,output);
 	
 	}
 
