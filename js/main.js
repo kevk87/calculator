@@ -75,6 +75,7 @@ var totalLengthScreen = false;
 
 var firstEquation = true;
 var memoryButton;
+var outputDisplayed = false;
 
 
 
@@ -285,34 +286,36 @@ $("body").keydown(function(e) {
 var operatorActive = true;
 
 $(".operator").on("click",function() {
+	multipleClicks = false;
 
 	if (number1 == null && number2 == null) {
 		number1 = $("#screen").html();
 		number2 = null;
 		operatorClicked = $(this).val();
-		console.log("1: " + number1 + ", " + number2);
+		console.log("1: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
 		clearScreen = true;
 		operatorActive=true;
-	} else if (number1 != null && number2 == null && operatorActive==true ){	
+	} 	else if (number1 != null && number2 == null && operatorActive==true ){	
 		number2 = $("#screen").html();
 		operatorClicked = $(this).val();
-		console.log("2: " + number1 + ", " + number2);
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
+		console.log("2: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
 		clearScreen = true;
-		// operatorActive=false;
-	}	else if (number1 != null && number2 != null && operatorActive==true) {
+		operatorActive=false;
+	}	else if (number1 != null && number2 != null) {
+		if ()
 		operatorClicked = $(this).val();
 		number1 = output;
 		number2 = $("#screen").html();
 		compute();
-		console.log("3: " + number1 + ", " + number2);
+		console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
 		$("#screen").html("");
 		$("#screen").html(output);
 		clearScreen = true;
-		// operatorActive=false;
-	} else {
+		operatorActive=false;
+	} 	else {
 		console.log(operatorActive);
 	}
 
@@ -426,17 +429,19 @@ $("#equals").on("click", function() {
 	// }
 
 	multipleClicks = false;
-	equalsPressed = false;
+	
 	
 		// if the user types in new number or press equals again
 		// clearScreen = true;
-	if (number2 != null ) {
+	if (number2 != null) {
 		number1 = output;
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
+		
 		clearScreen = true;
 		console.log("This is the first " + number1,number2,output);
+	
 	} else {
 		number2 = $("#screen").html();
 		compute();
@@ -444,7 +449,37 @@ $("#equals").on("click", function() {
 		$("#screen").html(output);
 		clearScreen = true;
 		console.log("This is the second " + number1,number2,output);
+	
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// 	if (number2 != null) {
+	// 	number1 = output;
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// 	clearScreen = true;
+	// 	console.log("This is the first " + number1,number2,output);
+	// } else {
+	// 	number2 = $("#screen").html();
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// 	clearScreen = true;
+	// 	console.log("This is the second " + number1,number2,output);
+	// }
+
 
 
 	
