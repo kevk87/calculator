@@ -72,7 +72,7 @@ var totalLengthScreen = false;
 var firstEquation = true;
 var memoryButton;
 var outputDisplayed = false;
-
+var switchEqualsFunction = false;
 
 
 
@@ -396,32 +396,8 @@ $(".operator").on("click",function() {
 
 
 $("#equals").on("click", function() {
-	// console.log($("#screen").html().length);
-	// if ($("#screen").html().length >= 12) {
-	// 	console.log("answer too long");
-	// 	$("#screen").html("error");
-	// } else {
-	// 	$("#screen").html();
-	// }
 
-	// number2 = $("#screen").html();
-
-//test
-	// if (firstEquation == true) {
-	// 	number2 = $("#screen").html();
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// 	clearScreen = true;
-	// 	firstEquation = false;
-	// } else { 
-	// 	number1 = output;
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// }
-
-	multipleClicks = false;
+		multipleClicks = false;
 	
 	
 		// if the user types in new number or press equals again
@@ -446,16 +422,30 @@ $("#equals").on("click", function() {
 	
 	}
 
+	// console.log($("#screen").html().length);
+	// if ($("#screen").html().length >= 12) {
+	// 	console.log("answer too long");
+	// 	$("#screen").html("error");
+	// } else {
+	// 	$("#screen").html();
+	// }
 
+	// number2 = $("#screen").html();
 
-
-
-
-
-
-
-
-
+//test
+	// if (firstEquation == true) {
+	// 	number2 = $("#screen").html();
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// 	clearScreen = true;
+	// 	firstEquation = false;
+	// } else { 
+	// 	number1 = output;
+	// 	compute();
+	// 	$("#screen").html("");
+	// 	$("#screen").html(output);
+	// }
 
 
 	// 	if (number2 != null) {
