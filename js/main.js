@@ -219,7 +219,7 @@ $("#zero").on("click",function() {
 
 $(".digits").on("click",function(e) {
 	
-	numberClicks();
+
 	if (clearScreen == true)  {
 		$("#screen").html("");	
 		$("#screen").append($(this).val());
@@ -257,30 +257,77 @@ $("body").keydown(function(e) {
 
 // if number1 is not null and number2 is null {
 // 	store the operatorClicked value 
-// 	store number2
-// 	compute 
-// 	display output
-// }	else if number1 and number2 are not null stored {
-// 	store the operatorClicked value
-// 	clearScreen = true
-// 	number2 will equal the new user inputted value
-// 	number1 will equal output
-// }	else if number1 is null {
+// 	// store number2
+// 	// compute 
+// 	// display output
+// 	number2 = $("#screen").html();
+// 	compute();
+// 	$("#screen").html("");
+// 	$("#screen").html(output);
+// 	clearScreen = true;
+// // }	else if number1 and number2 are not null stored {
+// // 	store the operatorClicked value
+// // 	clearScreen = true
+// // 	number2 will equal the new user inputted value
+// // 	number1 will equal output
+// // }	
+// }
+// else if number1 is null {
 // 	store number1 as variable
+// 	number2 = null;
 // 	store the operatorClicked value
 // 	clearScreen = true
 // }
+// have to disable the operator button
+//current errors
+// other operators are not getting correctly stored
 
+var operatorActive = true;
 
 $(".operator").on("click",function() {
 
-	number1 = $("#screen").html();
-	number2 = null;
-	operatorClicked = $(this).val();
-	clearScreen = true;
+	if (number1 == null && number2 == null) {
+		number1 = $("#screen").html();
+		number2 = null;
+		operatorClicked = $(this).val();
+		console.log("1: " + number1 + ", " + number2);
+		clearScreen = true;
+		operatorActive=true;
+	} else if (number1 != null && number2 == null && operatorActive==true ){	
+		number2 = $("#screen").html();
+		operatorClicked = $(this).val();
+		console.log("2: " + number1 + ", " + number2);
+		compute();
+		$("#screen").html("");
+		$("#screen").html(output);
+		clearScreen = true;
+		// operatorActive=false;
+	}	else if (number1 != null && number2 != null && operatorActive==true) {
+		operatorClicked = $(this).val();
+		number1 = output;
+		number2 = $("#screen").html();
+		compute();
+		console.log("3: " + number1 + ", " + number2);
+		$("#screen").html("");
+		$("#screen").html(output);
+		clearScreen = true;
+		// operatorActive=false;
+	} else {
+		console.log(operatorActive);
+	}
+
+
+	// number1 = $("#screen").html();
+	// number2 = null;
+	// operatorClicked = $(this).val();
+	// clearScreen = true;
 	
-	totalLengthScreen = false;
+	// totalLengthScreen = false;
 	
+});
+
+
+
 	// var test = true;
 	// numberOfClicks = 0;
 	// // number1 = $("#screen").html();
@@ -323,11 +370,6 @@ $(".operator").on("click",function() {
 	// }
 
 
-
-
-
-
-
 	// number1 = $("#screen").html();
 
 
@@ -353,9 +395,6 @@ $(".operator").on("click",function() {
 	//	$("#screen").html(output);
 	// }
 
-
-
-});
 
 	
 
@@ -387,11 +426,11 @@ $("#equals").on("click", function() {
 	// }
 
 	multipleClicks = false;
-	
+	equalsPressed = false;
 	
 		// if the user types in new number or press equals again
 		// clearScreen = true;
-	if (number2 != null) {
+	if (number2 != null ) {
 		number1 = output;
 		compute();
 		$("#screen").html("");
