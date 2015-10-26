@@ -69,10 +69,6 @@ var multipleClicks = false;
 var negative = false;
 //check if number is too long
 var totalLengthScreen = false;
-//check if the zero is pressed on the first value
-// var zeroPressed = false;
-//counter variable to check if input is longer than 12 numbers/characters
-
 var firstEquation = true;
 var memoryButton;
 var outputDisplayed = false;
@@ -115,18 +111,6 @@ function compute() {
 			console.log("invalid operator: " + operatorClicked);
 			break;			
 	}
-}
-
-function numbersStored() {
-	if (number1 !== null && number2 == null) {
-		number2 = $("#screen").html();
-		numberStored = true;
-	} else if (number1 !== null && number2 !== null) {
-		numberStored = true;
-	} else	{
-		numberStored = false;
-	}
-	return numberStored;
 }
 
 
@@ -225,6 +209,7 @@ $(".digits").on("click",function(e) {
 		$("#screen").html("");	
 		$("#screen").append($(this).val());
 		clearScreen = false;
+		outputDisplayed = false;
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
@@ -283,7 +268,7 @@ $("body").keydown(function(e) {
 //current errors
 // other operators are not getting correctly stored
 
-var operatorActive = true;
+
 
 $(".operator").on("click",function() {
 	multipleClicks = false;
@@ -292,31 +277,39 @@ $(".operator").on("click",function() {
 		number1 = $("#screen").html();
 		number2 = null;
 		operatorClicked = $(this).val();
-		console.log("1: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
 		clearScreen = true;
-		operatorActive=true;
-	} 	else if (number1 != null && number2 == null && operatorActive==true ){	
+		console.log("1: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
+	
+	} 	else if (number1 != null && number2 == null){	
 		number2 = $("#screen").html();
 		operatorClicked = $(this).val();
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
-		console.log("2: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
 		clearScreen = true;
-		operatorActive=false;
+		outputDisplayed = true;
+
+		console.log("2: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
+		
 	}	else if (number1 != null && number2 != null) {
-		if ()
-		operatorClicked = $(this).val();
-		number1 = output;
-		number2 = $("#screen").html();
-		compute();
-		console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output);
-		$("#screen").html("");
-		$("#screen").html(output);
-		clearScreen = true;
-		operatorActive=false;
+				if (outputDisplayed == true) {
+					operatorClicked = $(this).val();
+					console.log("SWITCH");
+					console.log("5: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
+					clearScreen = true;
+				} else {
+					operatorClicked = $(this).val();
+					number1 = output;
+					number2 = $("#screen").html();
+					compute();
+					console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
+					$("#screen").html("");
+					$("#screen").html(output);
+					clearScreen = true;	
+					outputDisplayed = true;	
+				}
 	} 	else {
-		console.log(operatorActive);
+		console.log("4: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 	}
 
 
@@ -438,7 +431,7 @@ $("#equals").on("click", function() {
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
-		
+		outputDisplayed = true;
 		clearScreen = true;
 		console.log("This is the first " + number1,number2,output);
 	
@@ -447,6 +440,7 @@ $("#equals").on("click", function() {
 		compute();
 		$("#screen").html("");
 		$("#screen").html(output);
+		outputDisplayed = true;
 		clearScreen = true;
 		console.log("This is the second " + number1,number2,output);
 	
