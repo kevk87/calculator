@@ -1,62 +1,3 @@
-// input[type=button]
-// Add number to the screen
-
-
-
-
-	// var button = $(this).val();
-	// var wholeNumber = $('#screen').val();
-	// wholeNumber += button;
-	// $("#screen").val(wholeNumber);
-
-
- 
-// var clear = function() {
-// }
-
-
-//problems 
-//when pressing equals button it is adding the first variable (not second variable) so output + number1 not number2
-//
-
-
-// variables:
-// 	clearScreen = false
-// 	number1
-// 	number2
-// 	operatorClicked 
-// 	output
-
-
-// digits on click:
-// 	if screen can be cleared (if clearScreen = true) // check if screen should be cleared
-// 		clear screen
-// 		set value of clearScreen to false // screen should not be cleared next time
-// 	append value to screen
-
-// addition on click:
-// 	set value of number1 to current screen value
-// 	set value of operatorClicked to "plus"
-// 	set value of clearScreen to true // defer the clearing of the screen until later
-
-// equals on click:
-// 	set value of number2 to current screen value
-// 	set value of output to (number1 operatorClicked number2)
-// 	clear screen // clear the screen immediately
-// 	append output to screen
-
-// 	$("#screen").append($(this).val());
-// 	number = $("#screen").html();
-
-
-// after the equals button 
-// 	if the digits are clicked again
-// 		set the clearscreen = true
-// 		append the new digits and store that as a variable
-// 		number2 will remain as the factorial number which will add onto number1
-// 		output will equal number1 += number2
-
-
 
 var number1;
 var number2;
@@ -120,15 +61,6 @@ $(".clear").on("click",function() {
 
 
 
-// Memory memoryButton
-// when memory plus button is clicked
-// if  memoryButton is not stored 
-// 		store the variable
-// 		else
-// 		add the value on the screen to the stored variable
-
-
-
 $(".memory").on("click",function() {
 	switch ($(this).val()) {
 	case "MR":
@@ -160,11 +92,6 @@ $(".memory").on("click",function() {
 	}
 	console.log(memoryButton);
 });
-
-
-
-
-
 
 
 $(".negative").on("click",function() {
@@ -203,9 +130,8 @@ $("#zero").on("click",function() {
 
 
 $(".digits").on("click",function(e) {
-	
-
 	if (clearScreen == true)  {
+		// $("#screen").html("0");
 		$("#screen").html("");	
 		$("#screen").append($(this).val());
 		clearScreen = false;
@@ -214,6 +140,7 @@ $(".digits").on("click",function(e) {
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
+			
 		} else {
 		multipleClicks = false;
 		console.log("cannot add more");
@@ -240,35 +167,6 @@ $("body").keydown(function(e) {
 		console.log("invalid");
 	}
 });
-
-
-// if number1 is not null and number2 is null {
-// 	store the operatorClicked value 
-// 	// store number2
-// 	// compute 
-// 	// display output
-// 	number2 = $("#screen").html();
-// 	compute();
-// 	$("#screen").html("");
-// 	$("#screen").html(output);
-// 	clearScreen = true;
-// // }	else if number1 and number2 are not null stored {
-// // 	store the operatorClicked value
-// // 	clearScreen = true
-// // 	number2 will equal the new user inputted value
-// // 	number1 will equal output
-// // }	
-// }
-// else if number1 is null {
-// 	store number1 as variable
-// 	number2 = null;
-// 	store the operatorClicked value
-// 	clearScreen = true
-// }
-// have to disable the operator button
-//current errors
-// other operators are not getting correctly stored
-
 
 
 $(".operator").on("click",function() {
@@ -312,89 +210,9 @@ $(".operator").on("click",function() {
 	} 	else {
 		console.log("4: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 	}
-
-
-	// number1 = $("#screen").html();
-	// number2 = null;
-	// operatorClicked = $(this).val();
-	// clearScreen = true;
-	
-	// totalLengthScreen = false;
 	
 });
-
-
-
-	// var test = true;
-	// numberOfClicks = 0;
-	// // number1 = $("#screen").html();
-
-	// 	if (number1 == null && firstEquation == true && test == true) {
-	// 	number1 = $("#screen").html();
-	// 	clearScreen = true;
-	// 	test = false;
-	// 		if (number2 == null && firstEquation == true && test == false) {
-	// 			number2 = Number($("#screen").html());
-	// 			console.log(number1);
-	// 			clearScreen = true;
-	// 			firstEquation = false;
-	// 		} else {
-	// 			console.log("need second value");
-	// 		}
-	// }	else {
-	// 	// number2 = $("#screen").html();
-	// 	Number(number2) = Number(number1);
-	// 	Number(number1) = Number(output);
-	// }
-
-	// operatorClicked = $(this).val();
-	// compute(number1, number2);
-	// $("#screen").html(output);	
-
-
-
-
-
-	// if (number1 == null && firstEquation == true) {
-	// 	number1 = $("#screen").html();
-	// 	firstEquation = false;
-	// 	clearScreen = true;
-
-	// }	else {
-	// 	// number2 = $("#screen").html();
-	// 	number2 = number1;
-	// 	number1 = output;	
-	// }
-
-
-	// number1 = $("#screen").html();
-
-
-	// if (number1 == null && clearScreen == false) {
-	//	number1 = $("#screen").html();
-	//	console.log("added first variable"); 
-	//	clearScreen = true;
-	//		if (number2 == null) {	
-	//			clearScreen = false;		
-	//			number2 = Number($("#screen").html());
-	//			console.log("added second variable"); 
-	//			compute();
-	//			console.log(number2);
-	//			$("#screen").html(output);
-			
-	//	} else {
-	//		console.log("wait until equal button is pressed");
-	//	}
-	//} else {
-	//	number2 = $("#screen").html();
-	//	number1 = output;
-	//	compute();
-	//	$("#screen").html(output);
-	// }
-
-
 	
-
 
 $("#equals").on("click", function() {
 
@@ -431,81 +249,13 @@ $("#equals").on("click", function() {
 		outputDisplayed = true;
 		clearScreen = true;
 		switchEqualsFunction = false;
-		console.log("This is the third " + number1,number2,output);
-	
+		console.log("This is the third " + number1,number2,output);	
 	}
 
-	// console.log($("#screen").html().length);
-	// if ($("#screen").html().length >= 12) {
-	// 	console.log("answer too long");
-	// 	$("#screen").html("error");
-	// } else {
-	// 	$("#screen").html();
-	// }
-
-	// number2 = $("#screen").html();
-
-//test
-	// if (firstEquation == true) {
-	// 	number2 = $("#screen").html();
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// 	clearScreen = true;
-	// 	firstEquation = false;
-	// } else { 
-	// 	number1 = output;
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// }
-
-
-	// 	if (number2 != null) {
-	// 	number1 = output;
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// 	clearScreen = true;
-	// 	console.log("This is the first " + number1,number2,output);
-	// } else {
-	// 	number2 = $("#screen").html();
-	// 	compute();
-	// 	$("#screen").html("");
-	// 	$("#screen").html(output);
-	// 	clearScreen = true;
-	// 	console.log("This is the second " + number1,number2,output);
-	// }
-
-
-
-	
- //	if (number2 == null) {
-	//	number2 = $("#screen").html();
-	//	compute();
-	//	$("#screen").html("");
-	//	$("#screen").html(output); 
-	//} else {
-	//	number1 = output;
-	//	compute()
-	//	$("#screen").html("");
-	//	$("#screen").html(output);
-
-		
-	// }
-
-
-
-		// compute();
-		// $("#screen").html("");
-		// $("#screen").html(output);
-		// clearScreen = true;
-	
 });
 
 
 	console.log(number2);
-
 	
 	function addition (a,b) {
 	 return (Number(a) + Number(b));		
@@ -513,15 +263,11 @@ $("#equals").on("click", function() {
 	function subtraction (a,b) {
 	 return ((a - b));		
 	}
-
 	function multiplication (a,b) {
  	 return ((a * b));		
 	}
 	function division (a,b) {
 	 return ((a/b));		
-	}
-	function getLength (numbers) {
-	 return numbers.toString().length;
 	}
 
 
@@ -604,3 +350,76 @@ $("#equals").on("click", function() {
 // 	store current value in variable
 // 	multiply value and operation to queue
 // 	allow display to be cleared
+
+// if number1 is not null and number2 is null {
+// 	store the operatorClicked value 
+// 	// store number2
+// 	// compute 
+// 	// display output
+// 	number2 = $("#screen").html();
+// 	compute();
+// 	$("#screen").html("");
+// 	$("#screen").html(output);
+// 	clearScreen = true;
+// // }	else if number1 and number2 are not null stored {
+// // 	store the operatorClicked value
+// // 	clearScreen = true
+// // 	number2 will equal the new user inputted value
+// // 	number1 will equal output
+// // }	
+// }
+// else if number1 is null {
+// 	store number1 as variable
+// 	number2 = null;
+// 	store the operatorClicked value
+// 	clearScreen = true
+// }
+// have to disable the operator button
+//current errors
+// other operators are not getting correctly stored
+
+// Memory memoryButton
+// when memory plus button is clicked
+// if  memoryButton is not stored 
+// 		store the variable
+// 		else
+// 		add the value on the screen to the stored variable
+
+
+
+
+// variables:
+// 	clearScreen = false
+// 	number1
+// 	number2
+// 	operatorClicked 
+// 	output
+
+
+// digits on click:
+// 	if screen can be cleared (if clearScreen = true) // check if screen should be cleared
+// 		clear screen
+// 		set value of clearScreen to false // screen should not be cleared next time
+// 	append value to screen
+
+// addition on click:
+// 	set value of number1 to current screen value
+// 	set value of operatorClicked to "plus"
+// 	set value of clearScreen to true // defer the clearing of the screen until later
+
+// equals on click:
+// 	set value of number2 to current screen value
+// 	set value of output to (number1 operatorClicked number2)
+// 	clear screen // clear the screen immediately
+// 	append output to screen
+
+// 	$("#screen").append($(this).val());
+// 	number = $("#screen").html();
+
+
+// after the equals button 
+// 	if the digits are clicked again
+// 		set the clearscreen = true
+// 		append the new digits and store that as a variable
+// 		number2 will remain as the factorial number which will add onto number1
+// 		output will equal number1 += number2
