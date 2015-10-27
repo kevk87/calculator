@@ -5,16 +5,16 @@ var clearScreen = false;
 var operatorClicked;
 var output;
 //for decimals
-var multipleClicks = false;
+// var multipleClicks = false;
 //check for negative/positive toggle
 var negative = false;
 //check if number is too long
 var totalLengthScreen = false;
-var firstEquation = true;
 var memoryButton;
 var outputDisplayed = false;
 var switchEqualsFunction = false;
-
+var decimalReset = false;
+var newEquation = false;
 
 
 function reset(){
@@ -28,8 +28,8 @@ function reset(){
 	number2 = null;
 	lastOperand = 0;
 	clearScreen = false;
-	multipleClicks = 0;
-	firstEquation = true;
+	// multipleClicks = 0;
+
 }
 
 
@@ -106,12 +106,22 @@ $(".negative").on("click",function() {
 	});
 
 
+// $(".decimal").on("click",function() {
+// 		if (multipleClicks == false) {
+// 			$("#screen").append($(this).val());
+// 			multipleClicks = true;
+// 		} else {
+// 			// clearScreen = true;
+// 			console.log("cannot add anymore decimal points");
+// 		}
+// 	});
+
 $(".decimal").on("click",function() {
-		if (multipleClicks == false) {
+		if ($("#screen").html().indexOf(".",-1) < 0 && decimalReset == false) {
 			$("#screen").append($(this).val());
-			multipleClicks = true;
+			decimalReset = true;
 		} else {
-			// clearScreen = true;
+			
 			console.log("cannot add anymore decimal points");
 		}
 	});
@@ -130,19 +140,32 @@ $("#zero").on("click",function() {
 
 
 $(".digits").on("click",function(e) {
+	if (newEquation == true) {
+		number1 = null;
+		number2 = null;
+		output = null;
+		newEquation = false;
+	} else {
+		console.log("keep running");
+	}
+
 	if (clearScreen == true)  {
 		// $("#screen").html("0");
+
 		$("#screen").html("");	
 		$("#screen").append($(this).val());
 		clearScreen = false;
 		outputDisplayed = false;
 		switchEqualsFunction = true;
+
+
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
 			
 		} else {
-		multipleClicks = false;
+		decimalReset = false;
+		// multipleClicks = false;
 		console.log("cannot add more");
 		}
 	}
@@ -170,7 +193,9 @@ $("body").keydown(function(e) {
 
 
 $(".operator").on("click",function() {
-	multipleClicks = false;
+	// multipleClicks = false;
+	newEquation = false;
+	decimalReset = false;
 
 	if (number1 == null && number2 == null) {
 		number1 = $("#screen").html();
@@ -193,6 +218,7 @@ $(".operator").on("click",function() {
 	}	else if (number1 != null && number2 != null) {
 				if (outputDisplayed == true) {
 					operatorClicked = $(this).val();
+
 					console.log("SWITCH");
 					console.log("5: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 					clearScreen = true;
@@ -214,9 +240,10 @@ $(".operator").on("click",function() {
 });
 	
 
-$("#equals").on("click", function() {
 
-		multipleClicks = false;
+$("#equals").on("click", function() {
+	decimalReset = false;
+		// multipleClicks = false;
 	
 	
 		// if the user types in new number or press equals again
@@ -239,20 +266,94 @@ $("#equals").on("click", function() {
 			outputDisplayed = true;
 			clearScreen = true;
 			switchEqualsFunction = false;
+			newEquation = true;
 			console.log("This is the second " + number1,number2,output,switchEqualsFunction);
 		}
 	} else {
-		number2 = $("#screen").html();
-		compute();
-		$("#screen").html("");
-		$("#screen").html(output);
-		outputDisplayed = true;
-		clearScreen = true;
-		switchEqualsFunction = false;
-		console.log("This is the third " + number1,number2,output);	
+			if(newEquation == false) {
+				number2 = $("#screen").html();
+				compute();
+				$("#screen").html("");
+				$("#screen").html(output);
+				outputDisplayed = true;
+				clearScreen = true;
+				switchEqualsFunction = false;
+				newEquation = true;
+			console.log("This is the third " + number1,number2,output);	
+		} else {
+			console.log("this is the sixth "  + number1,number2,output);
+		}
 	}
+		// 	number1 = null;
+		// number2 = null;
+		// output = null;
 
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// $("#equals").on("click", function() {
+// 	decimalReset = false;
+// 		// multipleClicks = false;
+	
+	
+// 		// if the user types in new number or press equals again
+// 		// clearScreen = true;
+// 	if (number2 != null) {
+// 		if (switchEqualsFunction == false) { 
+// 			number1 = output;
+// 			compute();
+// 			$("#screen").html("");
+// 			$("#screen").html(output);
+// 			outputDisplayed = true;
+// 			clearScreen = true;
+// 			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
+// 		} else {
+// 			number1 = output;
+// 			number2 = $("#screen").html();
+// 			compute();
+// 			$("#screen").html("");
+// 			$("#screen").html(output);
+// 			outputDisplayed = true;
+// 			clearScreen = true;
+// 			switchEqualsFunction = false;
+// 			console.log("This is the second " + number1,number2,output,switchEqualsFunction);
+// 		}
+// 	} else {
+// 		number2 = $("#screen").html();
+// 		compute();
+// 		$("#screen").html("");
+// 		$("#screen").html(output);
+// 		outputDisplayed = true;
+// 		clearScreen = true;
+// 		switchEqualsFunction = false;
+// 		console.log("This is the third " + number1,number2,output);	
+// 	}
+// 		// 	number1 = null;
+// 		// number2 = null;
+// 		// output = null;
+
+// });
 
 
 	console.log(number2);
