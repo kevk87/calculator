@@ -99,16 +99,50 @@ $(".memory").on("click",function() {
 });
 
 
+function checkNegative() {
+	var screenValueNeg = Number($("#screen").html());
+	
+	if($("#screen").html().indexOf("-",-1) < 0) {
+		$("#screen").html((-Math.abs(output)));
+	} else {
+		$("#screen").html((Math.abs(output)));
+	}
+}
+
+
 $(".negative").on("click",function() {
+
 	var screenValue = Number($("#screen").html());
-	if (negative == false) {	
+
+	if($("#screen").html().indexOf("-",-1) < 0) {
 		$("#screen").html((-Math.abs(screenValue)));
-		negative = true;
 	} else {
 		$("#screen").html((Math.abs(screenValue)));
-		negative = false;
-		}
-	});
+	}
+});
+
+
+	// var screenValue = Number($("#screen").html());
+	// if (negative == false) {	
+	// 	$("#screen").html((-Math.abs(screenValue)));
+	// 	negative = true;
+	// } else {
+	// 	$("#screen").html((Math.abs(screenValue)));
+	// 	negative = false;
+	// 	}
+	// });
+
+
+// $(".negative").on("click",function() {
+// 	var screenValue = Number($("#screen").html());
+// 	if (negative == false) {	
+// 		$("#screen").html((-Math.abs(screenValue)));
+// 		negative = true;
+// 	} else {
+// 		$("#screen").html((Math.abs(screenValue)));
+// 		negative = false;
+// 		}
+// 	});
 
 
 // $(".decimal").on("click",function() {
@@ -204,8 +238,6 @@ $(".digits").on("click", function(e) {
 		outputDisplayed = false;
 		switchEqualsFunction = true;
 		// test = false;
-
-
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
@@ -240,8 +272,11 @@ $("body").keydown(function(e) {
 	}
 });
 
-var decimal = false;
-var test = false;
+
+
+	var decimal = false;
+	var test = false;
+
 $(".decimal").on("click",function() {
 		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false) {
 				$("#screen").append($(this).val());
@@ -251,9 +286,12 @@ $(".decimal").on("click",function() {
 				console.log(" condition1: decimal = " + decimal);
 			} else if (test == true && decimal == false) {
 				$("#screen").html("");
+				clearScreen = true;
 				$("#screen").append($(this).val());
 				clearScreen = false;
 				test = false;
+
+				outputDisplayed = false;
 			}
 			else {
 				console.log("cannot add anymore decimal points");
@@ -270,8 +308,7 @@ $(".operator").on("click",function() {
 	test = true;
 	decimal = false;
 
-	console.log(" condition4: decimal = " + decimal + " and decimalReset = ");
-
+		//this stores the first variable when there are no variables stored
 	if (number1 == null && number2 == null) {
 		number1 = $("#screen").html();
 		number2 = null;
@@ -280,6 +317,7 @@ $(".operator").on("click",function() {
 		console.log("1: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 	
 	} 	else if (number1 != null && number2 == null){	
+		//this stores the second variable so only happens on the first sequence to compute the values using only the operator buttons
 		number2 = $("#screen").html();
 		operatorClicked = $(this).val();
 		compute();
@@ -290,15 +328,18 @@ $(".operator").on("click",function() {
 		console.log("2: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 		
 	}	else if (number1 != null && number2 != null) {
+			//store the operator only when user decides to change their minds on operator
 				if (outputDisplayed == true) {
 					operatorClicked = $(this).val();
-
 					console.log("SWITCH");
 					console.log("5: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 					clearScreen = true;
+			//this is after the user is able clicks on the operator button to let the user equate like the equals button
 				} else {
 					operatorClicked = $(this).val();
+					
 					number1 = output;
+
 					number2 = $("#screen").html();
 					compute();
 					console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
@@ -318,27 +359,33 @@ $(".operator").on("click",function() {
 $("#equals").on("click", function() {
 	// decimalReset = true;
 	// decimal = false;
-		// multipleClicks = false;
+	// multipleClicks = false;
 	
 	test = true;
 	decimal = false;
 		// if the user types in new number or press equals again
 		// clearScreen = true;
 	if (number2 != null) {
+		//this allows the user to press the equal button multiple times (allowing to compute by the multiplier)
 		if (switchEqualsFunction == false) { 
+		
 			number1 = output;
 			compute();
 			$("#screen").html("");
 			$("#screen").html(output);
+			
 			outputDisplayed = true;
 			clearScreen = true;
 			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
 		} else {
+			//this allows the user to click on an operator -> then a number -> then compute
+		
 			number1 = output;
 			number2 = $("#screen").html();
 			compute();
 			$("#screen").html("");
 			$("#screen").html(output);
+			
 			outputDisplayed = true;
 			clearScreen = true;
 			switchEqualsFunction = false;
@@ -346,11 +393,13 @@ $("#equals").on("click", function() {
 			console.log("This is the second " + number1,number2,output,switchEqualsFunction);
 		}
 	} else {
+		//this happens when the second variable is not stored..so when the equation is news
 			if(newEquation == false) {
 				number2 = $("#screen").html();
 				compute();
 				$("#screen").html("");
 				$("#screen").html(output);
+
 				outputDisplayed = true;
 				clearScreen = true;
 				switchEqualsFunction = false;
@@ -360,7 +409,12 @@ $("#equals").on("click", function() {
 			console.log("this is the sixth "  + number1,number2,output);
 		}
 	}
-
+	if (number1 == null) {
+		$("#screen").html();
+		console.log($("#screen").html());
+	}	else {
+		(console.log("check"));
+	}
 
 	
 
