@@ -30,9 +30,9 @@ function reset(){
 	number2 = null;
 	lastOperand = 0;
 	clearScreen = false;
-
+	decimal = false;
+	test = false;
 	// multipleClicks = 0;
-
 }
 
 
@@ -243,16 +243,17 @@ $("body").keydown(function(e) {
 var decimal = false;
 var test = false;
 $(".decimal").on("click",function() {
-		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false ) {
+		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false) {
 				$("#screen").append($(this).val());
+				if (test == true) {
 				decimal = true;
+			}
 				console.log(" condition1: decimal = " + decimal);
-			} else if (test == true) {
+			} else if (test == true && decimal == false) {
 				$("#screen").html("");
 				$("#screen").append($(this).val());
 				clearScreen = false;
 				test = false;
-				decimal = true;
 			}
 			else {
 				console.log("cannot add anymore decimal points");
@@ -268,8 +269,7 @@ $(".operator").on("click",function() {
 	newEquation = false;
 	test = true;
 	decimal = false;
-	// decimalReset = true;
-	// decimal = false;
+
 	console.log(" condition4: decimal = " + decimal + " and decimalReset = ");
 
 	if (number1 == null && number2 == null) {
