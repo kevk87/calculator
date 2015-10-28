@@ -111,6 +111,9 @@ function checkNegative() {
 
 
 $(".negative").on("click",function() {
+	if (($("#screen").html().indexOf("0"), - 1) < 0 && $("#screen").html().length == 1) {
+		$("#screen").html("");
+	}
 
 	var screenValue = Number($("#screen").html());
 
@@ -278,20 +281,20 @@ $("body").keydown(function(e) {
 	var test = false;
 
 $(".decimal").on("click",function() {
-		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false) {
+		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false && test == false) {
 				$("#screen").append($(this).val());
-				if (test == true) {
+				// if (test == true) {
 				decimal = true;
-			}
+			// }
 				console.log(" condition1: decimal = " + decimal);
 			} else if (test == true && decimal == false) {
 				$("#screen").html("");
-				clearScreen = true;
+				// clearScreen = true;
 				$("#screen").append($(this).val());
 				clearScreen = false;
 				test = false;
-
 				outputDisplayed = false;
+				console.log(" condition2: decimal = " + decimal);
 			}
 			else {
 				console.log("cannot add anymore decimal points");
