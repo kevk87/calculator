@@ -17,7 +17,13 @@ var negative = false;
 var newEquation = false;
 
 
-// Number($("#screen").html("0"));
+
+//Setting the intial screen to 0
+
+Number($("#screen").html("0"));
+clearScreen = true;
+test = true;
+decimal = false;
 
 
 function reset(){
@@ -31,10 +37,10 @@ function reset(){
 	number2 = null;
 	lastOperand = 0;
 	clearScreen = false;
+	test = true;
 	decimal = false;
-	test = false;
-	// clearScreen = true;
-	// Number($("#screen").html("0"));
+	clearScreen = true;
+	Number($("#screen").html("0"));
 	// multipleClicks = 0;
 }
 
@@ -278,7 +284,7 @@ $("body").keydown(function(e) {
 	// } else if (e.keyCode == 13) {
 	// 	compute();
 	// 	$("#screen").html(output);
-	// } else if (e.keyCode >= 106 && e.keyCode <= 111) {
+	// } else if (e.keyCode >= 1012 && e.keyCode <= 111) {
 	// 	operatorClicked = $(this).String.fromCharCode(e.keyCode);
 	// } else {
 	// 	console.log("invalid");
@@ -292,7 +298,7 @@ $("body").keydown(function(e) {
 
 $(".decimal").on("click",function() {
 		// && test == false
-		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false) {
+		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false && clearScreen == false) {
 				$("#screen").append($(this).val());
 				// if (test == true) {
 				decimal = true;
@@ -303,12 +309,18 @@ $(".decimal").on("click",function() {
 			} else if (clearScreen == true && test == true && decimal == false) {
 				$("#screen").html("");
 				// clearScreen = true;
-				$("#screen").append($(this).val());
+				$("#screen").append("0" + $(this).val());
 				clearScreen = false;
 				test = false;
-				// outputDisplayed = false;
+				decimal = true;
+				outputDisplayed = false;
 				console.log(" condition2: decimal = " + decimal);
 				console.log("test2");
+			} else if (clearScreen == true && $("#screen").html().indexOf("0",-1) == 0) {
+				$("#screen").append($(this).val());
+				decimal = true;
+				clearScreen = false;
+				test = false;
 			}
 			else {
 				console.log("cannot add anymore decimal points");
@@ -339,8 +351,8 @@ $(".operator").on("click",function() {
 		number2 = $("#screen").html();
 		operatorClicked = $(this).val();
 		compute();
+		
 		$("#screen").html("");
-	 
 		$("#screen").html(output);
 		
 		clearScreen = true;
@@ -362,6 +374,7 @@ $(".operator").on("click",function() {
 
 					number2 = $("#screen").html();
 					compute();
+					
 					console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 					$("#screen").html("");
 				
@@ -455,6 +468,7 @@ $("#equals").on("click", function() {
 			
 			number1 = output;
 			compute();
+			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
@@ -468,6 +482,7 @@ $("#equals").on("click", function() {
 			number1 = output;
 			number2 = $("#screen").html();
 			compute();
+			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
@@ -484,7 +499,9 @@ $("#equals").on("click", function() {
 			if(newEquation == false) {
 				number2 = $("#screen").html();
 				compute();
+				
 				$("#screen").html("");
+					//$("#screen").html(output);
 				$("#screen").html(output);
 				checkNegative();
 				outputDisplayed = true;
