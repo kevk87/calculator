@@ -13,7 +13,7 @@ var totalLengthScreen = false;
 var memoryButton;
 var outputDisplayed = false;
 var switchEqualsFunction = false;
-var negative = false;
+
 var newEquation = false;
 
 
@@ -361,14 +361,16 @@ $(".operator").on("click",function() {
 	if (number1 == null && number2 == null) {
 		number1 = $("#screen").html();
 		number2 = null;
+
 		operatorClicked = $(this).val();
+		
 		clearScreen = true;
 		console.log("1: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 	
 	} 	else if (number1 != null && number2 == null){	
 		//this stores the second variable so only happens on the first sequence to compute the values using only the operator buttons
 		number2 = $("#screen").html();
-		operatorClicked = $(this).val();
+		// operatorClicked = $(this).val();
 		compute();
 		
 		$("#screen").html("");
@@ -408,15 +410,6 @@ $(".operator").on("click",function() {
 	
 });
 
-function checkNegative() {
-	// var screenValue = Number($("#screen").html());
-	if (negative == true) {	
-	 // $("#screen").html((-Math.abs(screenValue)));
-	$("#screen").html(Number(($("#screen").html()) * -1));
-	} else {
-	console.log("leave it as positive");
-	} 
-}
 
 	// if(screen2.indexOf("-",-1) < 0 ) {
 	// 	negative = true;
@@ -449,6 +442,18 @@ function checkNegative() {
 // 		}
 // });
 
+function checkNegative() {
+	// var screenValue = Number($("#screen").html());
+	if (negative == true) {	
+	 // $("#screen").html((-Math.abs(screenValue)));
+	output = $("#screen").html(Number(($("#screen").html()) * -1));
+
+	} else {
+	console.log("leave it as is");
+	} 
+}
+
+
 $(".negative").on("click",function() {
 	$("#screen").html(Number(($("#screen").html()) * -1));
 	negative = true;
@@ -456,6 +461,8 @@ $(".negative").on("click",function() {
 		clearScreen = true;
 	}
 });
+
+
 	
 //Negative Case
 // Working 
@@ -476,7 +483,7 @@ $("#equals").on("click", function() {
 	// 1+2+1+ output (can toggle negative)
 	// 1+2 = = output can be toggled
 	// + = output can be toggled
-	negative = false;
+	
 	test = true;
 	decimal = false;
 		// if the user types in new number or press equals again
