@@ -13,10 +13,11 @@ var totalLengthScreen = false;
 var memoryButton;
 var outputDisplayed = false;
 var switchEqualsFunction = false;
-
+var negative = false;
 var newEquation = false;
 
 
+// Number($("#screen").html("0"));
 
 
 function reset(){
@@ -32,6 +33,8 @@ function reset(){
 	clearScreen = false;
 	decimal = false;
 	test = false;
+	// clearScreen = true;
+	// Number($("#screen").html("0"));
 	// multipleClicks = 0;
 }
 
@@ -99,30 +102,42 @@ $(".memory").on("click",function() {
 });
 
 
-function checkNegative() {
-	var screenValueNeg = Number($("#screen").html());
-	
-	if($("#screen").html().indexOf("-",-1) < 0) {
-		$("#screen").html((-Math.abs(output)));
-	} else {
-		$("#screen").html((Math.abs(output)));
-	}
-}
+// function checkNegative() {
+// 	if(output.indexOf("-",-1) < 0) {
+		
+// 		output = (output * -1);
+// 	} else {
+// 		output = (output * 1);
+// 	}
+// 	return output;
+// }
+
+// $(".negative").on("click",function() {
+// 	var screenValue = Number($("#screen").html());
+// 	if (negative == false) {	
+// 		$("#screen").html((-Math.abs(screenValue)));
+// 		negative = true;
+// 	} else {
+// 		$("#screen").html((Math.abs(screenValue)));
+// 		negative = false;
+// 		}
+// 	});
 
 
-$(".negative").on("click",function() {
-	if (($("#screen").html().indexOf("0"), - 1) < 0 && $("#screen").html().length == 1) {
-		$("#screen").html("");
-	}
+// $(".negative").on("click",function() {
+// 	if (($("#screen").html().indexOf("0"), - 1) < 0 && $("#screen").html().length == 1) {
+// 		$("#screen").html("");
+// 	}
 
-	var screenValue = Number($("#screen").html());
+// 	var screenValue = Number($("#screen").html());
 
-	if($("#screen").html().indexOf("-",-1) < 0) {
-		$("#screen").html((-Math.abs(screenValue)));
-	} else {
-		$("#screen").html((Math.abs(screenValue)));
-	}
-});
+// 	if($("#screen").html().indexOf("-",-1) < 0) {
+// 		$("#screen").html((-Math.abs(screenValue)));
+// 	} else {
+// 		$("#screen").html((Math.abs(screenValue)));
+// 	}
+// });
+
 
 
 	// var screenValue = Number($("#screen").html());
@@ -136,16 +151,7 @@ $(".negative").on("click",function() {
 	// });
 
 
-// $(".negative").on("click",function() {
-// 	var screenValue = Number($("#screen").html());
-// 	if (negative == false) {	
-// 		$("#screen").html((-Math.abs(screenValue)));
-// 		negative = true;
-// 	} else {
-// 		$("#screen").html((Math.abs(screenValue)));
-// 		negative = false;
-// 		}
-// 	});
+
 
 
 // $(".decimal").on("click",function() {
@@ -244,6 +250,7 @@ $(".digits").on("click", function(e) {
 	} else {
 		if ($("#screen").html().length <= 12) {		
 			$("#screen").append($(this).val());
+			test = false;
 			
 		} else {
 		// decimalReset = false;
@@ -259,20 +266,23 @@ $("body").keydown(function(e) {
 	if (e.keyCode >= 48 && e.keyCode <=57 || e.keyCode == 110 && clearScreen == true) {
 		if ($("#screen").html().length <= 12) {
 		// $("#screen").html("")
-		$("#screen").append(Number(String.fromCharCode(e.keyCode)));
+		var num = String.fromCharCode(e.keyCode);
+		$("#screen").append(Number(num));
+
 		clearScreen = false;
 	} else {
 		console.log("too long");
 	}
-		console.log(e.keyCode);
-	} else if (e.keyCode == 13) {
-		compute();
-		$("#screen").html(output);
-	} else if (e.keyCode >= 106 && e.keyCode <= 111) {
-		operatorClicked = $(this).String.fromCharCode(e.keyCode);
-	} else {
-		console.log("invalid");
-	}
+}
+	// 	console.log(e.keyCode);
+	// } else if (e.keyCode == 13) {
+	// 	compute();
+	// 	$("#screen").html(output);
+	// } else if (e.keyCode >= 106 && e.keyCode <= 111) {
+	// 	operatorClicked = $(this).String.fromCharCode(e.keyCode);
+	// } else {
+	// 	console.log("invalid");
+	// }
 });
 
 
@@ -281,23 +291,28 @@ $("body").keydown(function(e) {
 	var test = false;
 
 $(".decimal").on("click",function() {
-		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false && test == false) {
+		// && test == false
+		if ($("#screen").html().indexOf(".",-1) < 0 && decimal == false) {
 				$("#screen").append($(this).val());
 				// if (test == true) {
 				decimal = true;
+				// test = true;
+				console.log("test1");
 			// }
 				console.log(" condition1: decimal = " + decimal);
-			} else if (test == true && decimal == false) {
+			} else if (clearScreen == true && test == true && decimal == false) {
 				$("#screen").html("");
 				// clearScreen = true;
 				$("#screen").append($(this).val());
 				clearScreen = false;
 				test = false;
-				outputDisplayed = false;
+				// outputDisplayed = false;
 				console.log(" condition2: decimal = " + decimal);
+				console.log("test2");
 			}
 			else {
 				console.log("cannot add anymore decimal points");
+				console.log("test3");
 		}
 	});
 
@@ -325,7 +340,9 @@ $(".operator").on("click",function() {
 		operatorClicked = $(this).val();
 		compute();
 		$("#screen").html("");
+	 
 		$("#screen").html(output);
+		
 		clearScreen = true;
 		outputDisplayed = true;
 		console.log("2: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
@@ -347,7 +364,9 @@ $(".operator").on("click",function() {
 					compute();
 					console.log("3: " + number1 + " " + operatorClicked + " " + number2 + " = " + output + " " + outputDisplayed);
 					$("#screen").html("");
+				
 					$("#screen").html(output);
+					
 					clearScreen = true;	
 					outputDisplayed = true;	
 				}
@@ -356,14 +375,76 @@ $(".operator").on("click",function() {
 	}
 	
 });
+
+function checkNegative() {
+	// var screenValue = Number($("#screen").html());
+	if (negative == true) {	
+	 // $("#screen").html((-Math.abs(screenValue)));
+	$("#screen").html(Number(($("#screen").html()) * -1));
+	} else {
+	console.log("leave it as positive");
+	} 
+}
+
+	// if(screen2.indexOf("-",-1) < 0 ) {
+	// 	negative = true;
+// 	if(negative == true) {
+// 		// output = (output * -1);
+// 		$("#screen").html(output);
+// 	output = -Math.abs(output);
+// 	} else {
+// 		// output = (output * 1);
+// 	output = Math.abs(output);
+// 	}
+// 	return output;
+// }
+
+// $(".negative").on("click",function() {
+// 	// var screenValue = Number($("#screen").html());
+// 	 	if (negative == false) {
+// 	// if ($("#screen").html().indexOf("-",-1) < 0  && negative == false) {	
+// 		// $("#screen").html((-Math.abs(screenValue)));
+// 		$("#screen").html(Number(($("#screen").html()) * -1));
+// 		console.log("state1");
+// 		// Number($("#screen").prepend("-"));
+// 		negative = true;
+// 	} else {
+// 		// (Number($("#screen").html()) * -1);
+// 		// $("#screen").html("test2");
+// 		// $("#screen").html((Math.abs(screenValue)));
+// 		negative = false;
+// 		console.log("state2");
+// 		}
+// });
+
+$(".negative").on("click",function() {
+	$("#screen").html(Number(($("#screen").html()) * -1));
+	negative = true;
+	if($("#screen").html().indexOf("0", -1) == 0) {
+		clearScreen = true;
+	}
+});
 	
+//Negative Case
+// Working 
+// -1 + 1
+// -1 + -1
 
-
+// Not Working
+// 1-0 = = 
 $("#equals").on("click", function() {
 	// decimalReset = true;
 	// decimal = false;
 	// multipleClicks = false;
-	
+	// if the negative has been toggled
+	// 	if negative is toggled on 
+
+	// When can you change the output value
+	// 1+1 = output (can toggle negative)
+	// 1+2+1+ output (can toggle negative)
+	// 1+2 = = output can be toggled
+	// + = output can be toggled
+	negative = false;
 	test = true;
 	decimal = false;
 		// if the user types in new number or press equals again
@@ -371,12 +452,13 @@ $("#equals").on("click", function() {
 	if (number2 != null) {
 		//this allows the user to press the equal button multiple times (allowing to compute by the multiplier)
 		if (switchEqualsFunction == false) { 
-		
+			
 			number1 = output;
 			compute();
 			$("#screen").html("");
-			$("#screen").html(output);
 			
+			$("#screen").html(output);
+			checkNegative(); 
 			outputDisplayed = true;
 			clearScreen = true;
 			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
@@ -387,7 +469,9 @@ $("#equals").on("click", function() {
 			number2 = $("#screen").html();
 			compute();
 			$("#screen").html("");
+			
 			$("#screen").html(output);
+			checkNegative(); 
 			
 			outputDisplayed = true;
 			clearScreen = true;
@@ -396,13 +480,13 @@ $("#equals").on("click", function() {
 			console.log("This is the second " + number1,number2,output,switchEqualsFunction);
 		}
 	} else {
-		//this happens when the second variable is not stored..so when the equation is news
+		//this happens when the second variable is not stored..so when the equation is new
 			if(newEquation == false) {
 				number2 = $("#screen").html();
 				compute();
 				$("#screen").html("");
 				$("#screen").html(output);
-
+				checkNegative();
 				outputDisplayed = true;
 				clearScreen = true;
 				switchEqualsFunction = false;
