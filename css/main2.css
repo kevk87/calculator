@@ -93,6 +93,16 @@ textarea {
   src: url('../fonts/digital7.eot') format('embedded-opentype'), url('../fonts/digital7.woff2') format('woff2'), url('../fonts/digital7.woff') format('woff'), url('../fonts/digital7.ttf') format('truetype'), url('../fonts/digital7.svg#digital7') format('svg');
 }
 /*font-family: 'Montserrat', sans-serif;*/
+.memoryValue {
+  width: 350px;
+  height: 40px;
+  text-transform: uppercase;
+  color: #1c2128;
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  transition: 0.4ms ease-out 0.4s;
+}
 body {
   width: 100%;
   height: auto;

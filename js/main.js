@@ -82,7 +82,8 @@ $(".memory").on("click",function() {
 		clearScreen = true;
 		break;
 	case "MC":
-		memoryButton = null;
+		memoryButton = 0;
+		$(".memoryValue").html("");
 		break;
 	case "M+":
 		if (memoryButton == null) {
@@ -105,7 +106,10 @@ $(".memory").on("click",function() {
 			break;
 	}
 	console.log(memoryButton);
+
+	$(".memoryValue").html("Memory: " + memoryButton);
 });
+
 
 
 // function checkNegative() {
@@ -266,19 +270,33 @@ $(".digits").on("click", function(e) {
 	}
 });
 
-
+var newValueKeys = false;
 
 $("body").keydown(function(e) {
-	if (e.keyCode >= 48 && e.keyCode <=57 || e.keyCode == 110 && clearScreen == true) {
+
+
+	if (e.keyCode >= 48 && e.keyCode <=57 || e.keyCode == 110 ) {
+		
 		if ($("#screen").html().length <= 12) {
 		// $("#screen").html("")
 		var num = String.fromCharCode(e.keyCode);
 		$("#screen").append(Number(num));
 
-		clearScreen = false;
+		 	if ($("#screen").html().indexOf("0",-1) == 0) {
+		 		$("#screen").html("");
+		 	}
+		 clearScreen = false;
 	} else {
 		console.log("too long");
+		clearScreen = true;
+		// $("#screen").html("");
 	}
+
+ 	if (newValueKeys == true) {
+		 $("#screen").html("");
+		 newValueKeys = false;
+	}
+
 }
 	// 	console.log(e.keyCode);
 	// } else if (e.keyCode == 13) {
@@ -337,6 +355,7 @@ $(".operator").on("click",function() {
 	newEquation = false;
 	test = true;
 	decimal = false;
+	newValueKeys = true;
 
 		//this stores the first variable when there are no variables stored
 	if (number1 == null && number2 == null) {
