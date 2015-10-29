@@ -522,7 +522,7 @@ $("#equals").on("click", function() {
 		}
 	} else {
 		//this happens when the second variable is not stored..so when the equation is new
-			if(newEquation == false) {
+			if(newEquation == false && number1 !=null) {
 				number2 = $("#screen").html();
 				compute();
 				
@@ -539,7 +539,7 @@ $("#equals").on("click", function() {
 			console.log("this is the sixth "  + number1,number2,output);
 		}
 	}
-	if (number1 == null) {
+	if (number1 == null && number2 == null && newEquation == false) {
 		$("#screen").html();
 		console.log($("#screen").html());
 	}	else {
