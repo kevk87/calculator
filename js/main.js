@@ -112,7 +112,7 @@ $(".memory").on("click",function() {
 
 
 
-// function checkNegative() {
+// function {
 // 	if(output.indexOf("-",-1) < 0) {
 		
 // 		output = (output * -1);
@@ -442,16 +442,16 @@ $(".operator").on("click",function() {
 // 		}
 // });
 
-function checkNegative() {
-	// var screenValue = Number($("#screen").html());
-	if (negative == true) {	
-	 // $("#screen").html((-Math.abs(screenValue)));
-	output = $("#screen").html(Number(($("#screen").html()) * -1));
+// function {
+// 	// var screenValue = Number($("#screen").html());
+// 	if (negative == true) {	
+// 	 // $("#screen").html((-Math.abs(screenValue)));
+// 	output = $("#screen").html(Number(($("#screen").html()) * -1));
 
-	} else {
-	console.log("leave it as is");
-	} 
-}
+// 	} else {
+// 	console.log("leave it as is");
+// 	} 
+// }
 
 
 $(".negative").on("click",function() {
@@ -498,7 +498,7 @@ $("#equals").on("click", function() {
 			$("#screen").html("");
 			
 			$("#screen").html(output);
-			checkNegative(); 
+			
 			outputDisplayed = true;
 			clearScreen = true;
 			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
@@ -512,7 +512,7 @@ $("#equals").on("click", function() {
 			$("#screen").html("");
 			
 			$("#screen").html(output);
-			checkNegative(); 
+			
 			
 			outputDisplayed = true;
 			clearScreen = true;
@@ -529,7 +529,7 @@ $("#equals").on("click", function() {
 				$("#screen").html("");
 					//$("#screen").html(output);
 				$("#screen").html(output);
-				checkNegative();
+				
 				outputDisplayed = true;
 				clearScreen = true;
 				switchEqualsFunction = false;
