@@ -13,7 +13,7 @@ var totalLengthScreen = false;
 var memoryButton;
 var outputDisplayed = false;
 var switchEqualsFunction = false;
-
+var numberCounter = null;
 var newEquation = false;
 
 
@@ -49,9 +49,19 @@ function reset(){
 
 
 function compute() {
+
+	// if number 1 is equal to output have it be able to display it as a negative 
+	// 	if the negative button is on/off
+		
+	// 	only for the three equations
+	// 	outputDisplayed == true and both number1 and number2 is not null
+	// 	switchEqualsFunction is true
+	// 	switchEqualsFunction is false
+
+
 	switch(operatorClicked){
 		case "+":
-			output = addition(Number(number1),Number(number2));
+			output = Number(addition(number1,number2));
 			break;
 		case "-": 
 			output = Number(subtraction(number1,number2));
@@ -392,6 +402,12 @@ $(".operator").on("click",function() {
 					operatorClicked = $(this).val();
 					
 					number1 = output;
+					if (negative == true) {
+						number1 = -Math.abs(number1);
+					} 	else {
+						number1 = Math.abs(number1);
+					} 
+					console.log(number1);
 
 					number2 = $("#screen").html();
 					compute();
@@ -424,6 +440,21 @@ $(".operator").on("click",function() {
 // 	return output;
 // }
 
+
+$(".negative").on("click",function() {
+
+	var screenValue = Number($("#screen").html());
+		output *= -1; 
+		if (negative == false) {
+			$("#screen").html((-Math.abs(screenValue)));
+			negative = true;
+		} else {
+			$("#screen").html((Math.abs(screenValue)));
+			negative = false;
+		}
+});
+
+
 // $(".negative").on("click",function() {
 // 	// var screenValue = Number($("#screen").html());
 // 	 	if (negative == false) {
@@ -454,13 +485,15 @@ $(".operator").on("click",function() {
 // }
 
 
-$(".negative").on("click",function() {
-	$("#screen").html(Number(($("#screen").html()) * -1));
-	negative = true;
-	if($("#screen").html().indexOf("0", -1) == 0) {
-		clearScreen = true;
-	}
-});
+
+// $(".negative").on("click",function() {
+// 	negative = true;
+// 	$("#screen").html(Number(($("#screen").html()) * -1));
+
+// 	if($("#screen").html().indexOf("0", -1) == 0) {
+// 		clearScreen = true;
+// 	}
+// });
 
 
 	
@@ -493,11 +526,22 @@ $("#equals").on("click", function() {
 		if (switchEqualsFunction == false) { 
 			
 			number1 = output;
+			if (negative == true) {
+				number1 = -Math.abs(number1);
+				} else {
+				number1 = Math.abs(number1);
+			}
+					
 			compute();
 			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
+			if (negative == true) {
+						output = -Math.abs(output);
+					} 	else {
+						output = Math.abs(output);
+					} 
 			
 			outputDisplayed = true;
 			clearScreen = true;
@@ -506,13 +550,22 @@ $("#equals").on("click", function() {
 			//this allows the user to click on an operator -> then a number -> then compute
 		
 			number1 = output;
+			if (negative == true) {
+				nubmer1 = -Math.abs(number1);
+				} else {
+				number1 = Math.abs(number1);
+			}
 			number2 = $("#screen").html();
 			compute();
 			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
-			
+			if (negative == true) {
+			output = -Math.abs(output);
+			} 	else {
+			output = Math.abs(output);
+			} 
 			
 			outputDisplayed = true;
 			clearScreen = true;
@@ -529,7 +582,11 @@ $("#equals").on("click", function() {
 				$("#screen").html("");
 					//$("#screen").html(output);
 				$("#screen").html(output);
-				
+				if (negative == true) {
+						output = -Math.abs(output);
+					} 	else {
+						output = Math.abs(output);
+					} 
 				outputDisplayed = true;
 				clearScreen = true;
 				switchEqualsFunction = false;
@@ -557,13 +614,13 @@ $("#equals").on("click", function() {
 	 return (Number(a) + Number(b));		
 	}
 	function subtraction (a,b) {
-	 return ((a - b));		
+	 return (Number(a) - Number(b));		
 	}
 	function multiplication (a,b) {
- 	 return ((a * b));		
+ 	 return (Number(a) * (b));		
 	}
 	function division (a,b) {
-	 return ((a/b));		
+	 return (Number(a)/(b));		
 	}
 
 
