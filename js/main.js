@@ -26,6 +26,8 @@ test = true;
 decimal = false;
 
 
+
+
 function reset(){
 
 	console.log("reset called");
@@ -62,18 +64,23 @@ function compute() {
 	switch(operatorClicked){
 		case "+":
 			output = Number(addition(number1,number2));
+			Math.round(output);
 			break;
 		case "-": 
 			output = Number(subtraction(number1,number2));
+			Math.round(output);
 			break;
 		case "*":
 			output = Number(multiplication(number1,number2));
+			Math.round(output);
 			break;
 		case "/" :
 			output = Number(division(number1,number2));
+			Math.round(output);
 			break;
 		default:
 			console.log("invalid operator: " + operatorClicked);
+			Math.round(output);
 			break;			
 	}
 }
@@ -197,11 +204,14 @@ $(".memory").on("click",function() {
 $("#zero").on("click",function() {
 		if ($("#screen").html().length > 0) {
 			if( clearScreen == false) {
+				if($("#screen").html().length <= 12)
 			$("#screen").append($(this).val());
 			}	else {
 				console.log("do nothing");
 			}	
 		}
+
+
 	});
 
 
@@ -402,11 +412,7 @@ $(".operator").on("click",function() {
 					operatorClicked = $(this).val();
 					
 					number1 = output;
-					if (negative == true) {
-						number1 = -Math.abs(number1);
-					} 	else {
-						number1 = Math.abs(number1);
-					} 
+
 					console.log(number1);
 
 					number2 = $("#screen").html();
@@ -443,15 +449,10 @@ $(".operator").on("click",function() {
 
 $(".negative").on("click",function() {
 
-	var screenValue = Number($("#screen").html());
-		output *= -1; 
-		if (negative == false) {
-			$("#screen").html((-Math.abs(screenValue)));
-			negative = true;
-		} else {
-			$("#screen").html((Math.abs(screenValue)));
-			negative = false;
-		}
+	// $("#screen").html() * -1;
+
+	$("#screen").html(Number(($("#screen").html()) * -1));
+	output = output * -1;
 });
 
 
@@ -526,23 +527,13 @@ $("#equals").on("click", function() {
 		if (switchEqualsFunction == false) { 
 			
 			number1 = output;
-			if (negative == true) {
-				number1 = -Math.abs(number1);
-				} else {
-				number1 = Math.abs(number1);
-			}
-					
+
 			compute();
 			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
-			if (negative == true) {
-						output = -Math.abs(output);
-					} 	else {
-						output = Math.abs(output);
-					} 
-			
+
 			outputDisplayed = true;
 			clearScreen = true;
 			console.log("This is the first " + number1,number2,output,switchEqualsFunction);
@@ -550,23 +541,14 @@ $("#equals").on("click", function() {
 			//this allows the user to click on an operator -> then a number -> then compute
 		
 			number1 = output;
-			if (negative == true) {
-				nubmer1 = -Math.abs(number1);
-				} else {
-				number1 = Math.abs(number1);
-			}
+
 			number2 = $("#screen").html();
 			compute();
 			
 			$("#screen").html("");
 			
 			$("#screen").html(output);
-			if (negative == true) {
-			output = -Math.abs(output);
-			} 	else {
-			output = Math.abs(output);
-			} 
-			
+
 			outputDisplayed = true;
 			clearScreen = true;
 			switchEqualsFunction = false;
@@ -582,11 +564,7 @@ $("#equals").on("click", function() {
 				$("#screen").html("");
 					//$("#screen").html(output);
 				$("#screen").html(output);
-				if (negative == true) {
-						output = -Math.abs(output);
-					} 	else {
-						output = Math.abs(output);
-					} 
+
 				outputDisplayed = true;
 				clearScreen = true;
 				switchEqualsFunction = false;
